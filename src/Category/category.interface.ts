@@ -1,9 +1,9 @@
-// export interface Product extends Document {
-//   title: string;
-//   description: string;
-//   price: number;
-//   discount: number;
-//   category: string;
-//   images: string[];
-//   quantity: number;
-// }
+export interface Category extends Document {
+  title: string;
+  description: string;
+  //   price: number;
+  //   discount: number;
+  //   category: string;
+  image: string;
+  //   quantity: number;
+}

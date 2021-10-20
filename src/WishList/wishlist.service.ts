@@ -12,6 +12,13 @@ export class WishlistService {
     @InjectModel('Wishlists') private readonly cartModel: Model<Wishlist>,
   ) {}
   async create(userId: string, productId: string) {
+    const prod = await this.cartModel.findOne({
+      userId,
+      productId,
+    });
+    if (prod) {
+      return prod;
+    }
     const product = await this.productModel.findOne({ _id: productId });
     const cartProduct = new this.cartModel({
       userId,

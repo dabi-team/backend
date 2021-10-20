@@ -20,7 +20,7 @@ export class CartController {
   }
 
   @Get('getAll/:userId')
-  findAll(@Param('id') id: string) {
+  findAll(@Param('userId') id: string) {
     return this.appService.findAll(id);
   }
 

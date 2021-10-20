@@ -11,6 +11,14 @@ export class CartService {
     @InjectModel('Cart') private readonly cartModel: Model<Cart>,
   ) {}
   async create(userId: string, productId: string) {
+    // const product = await this.productModel.findOne({ _id: productId });
+    const prod = await this.cartModel.findOne({
+      userId,
+      productId,
+    });
+    if (prod) {
+      return prod;
+    }
     const product = await this.productModel.findOne({ _id: productId });
     const cartProduct = new this.cartModel({
       userId,
@@ -22,11 +30,13 @@ export class CartService {
     return await cartProduct.save();
   }
   async findAll(userId: string) {
-    const product = await this.cartModel
-      .find({
-        userId: userId,
-      })
-      .exec();
+    // console.log(userId);
+
+    const product = await this.cartModel.find({
+      userId: userId,
+    });
+    // console.log(product);
+
     return product;
   }
   async delete(id: string) {
