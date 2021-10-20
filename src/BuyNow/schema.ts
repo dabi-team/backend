@@ -17,4 +17,5 @@ export const BuyNowSchema = new mongoose.Schema({
     type: Object,
     required: true,
   },
+  time: { type: Date, default: Date.now },
 });

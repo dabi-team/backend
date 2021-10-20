@@ -5,19 +5,29 @@ https://docs.nestjs.com/providers#services
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose/dist/common';
 import { Model } from 'mongoose';
-import { User } from './auth.interface';
+import { User } from 'src/User/user.interface';
+import { AuthUser } from './auth.interface';
 
 @Injectable()
 export class AuthService {
   constructor(
-    @InjectModel('NewUser') private readonly userModel: Model<User>,
+    @InjectModel('Auth') private readonly authModel: Model<AuthUser>,
+    @InjectModel('Users') private readonly userModel: Model<User>,
   ) {}
   async create(data: any) {
-    const createdCat = new this.userModel(data);
+    const createdCat = new this.authModel(data);
 
-    return await createdCat.save();
+    const auth = await createdCat.save();
+    const user = new this.userModel({
+      email: auth.email,
+      userId: auth.id,
+    });
+
+    await user.save();
+
+    return auth;
   }
   async findOne(condition: any) {
-    return this.userModel.findOne(condition);
+    return this.authModel.findOne(condition);
   }
 }

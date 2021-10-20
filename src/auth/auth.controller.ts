@@ -16,14 +16,22 @@ export class AuthController {
   ) {
     const hashedPassword = await bcrypt.hash(password, 12);
 
-    const user = await this.appService.findOne({ email });
-    if (user) {
+    const users = await this.appService.findOne({ email });
+    console.log(users);
+
+    if (users) {
       throw new BadRequestException('user exist');
     }
-    return this.appService.create({
+    const user = await this.appService.create({
       email,
       password: hashedPassword,
     });
+    const jwt = await this.jwtService.signAsync({ id: user._id });
+
+    return {
+      user: user,
+      jwt,
+    };
   }
   @Post('login')
   async login(
@@ -41,7 +49,7 @@ export class AuthController {
     // const hashedPassword = await bcrypt.hash(password, 12);
 
     return {
-      ...user,
+      user: user,
       jwt,
     };
   }
