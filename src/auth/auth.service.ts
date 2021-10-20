@@ -11,12 +11,17 @@ export class AuthService {
     @InjectModel('Users') private readonly userModel: Model<User>,
   ) {}
   async create(data: any) {
-    const createdCat = new this.authModel(data);
+    const createdCat = new this.authModel({
+      email: data.email,
+      password: data.password,
+    });
 
     const auth = await createdCat.save();
     const user = new this.userModel({
       email: auth.email,
       userId: auth.id,
+      name: data.name,
+      number: data.number,
     });
 
     await user.save();

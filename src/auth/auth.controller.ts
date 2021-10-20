@@ -13,6 +13,8 @@ export class AuthController {
   async register(
     @Body('email') email: string,
     @Body('password') password: string,
+    @Body('name') name: string,
+    @Body('number') number: string,
   ) {
     const hashedPassword = await bcrypt.hash(password, 12);
 
@@ -25,6 +27,8 @@ export class AuthController {
     const user = await this.appService.create({
       email,
       password: hashedPassword,
+      name,
+      number,
     });
     const jwt = await this.jwtService.signAsync({ id: user._id });
 

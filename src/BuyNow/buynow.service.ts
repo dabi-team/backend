@@ -10,13 +10,19 @@ export class BuynowService {
     @InjectModel('Products') private readonly productModel: Model<Product>,
     @InjectModel('BuyNow') private readonly cartModel: Model<BuyNow>,
   ) {}
-  async create(userId: string, productId: string, quantity: number) {
+  async create(
+    userId: string,
+    productId: string,
+    quantity: number,
+    status: boolean,
+  ) {
     const product = await this.productModel.findOne({ _id: productId });
     const cartProduct = new this.cartModel({
       userId,
       productId,
       product,
       quantity,
+      status,
     });
 
     return await cartProduct.save();
@@ -31,6 +37,11 @@ export class BuynowService {
   }
   async delete(id: string) {
     return await this.cartModel.findByIdAndRemove(id);
+  }
+  async update(data: any, id: string) {
+    const product = await this.cartModel.findByIdAndUpdate(id, data, {
+      new: true,
+    });
   }
   async findOne(id: string) {
     const product = await this.cartModel.findOne({ _id: id });

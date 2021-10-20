@@ -3,4 +3,5 @@ export interface BuyNow extends Document {
   productId: string;
   quantity: string;
   product: Object;
+  status: boolean;
 }

@@ -20,6 +20,8 @@ export class ProductsService {
   }
   async findOne(id: string) {
     const product = await this.userModel.findOne({ _id: id });
+    console.log(product);
+
     return product;
   }
 
