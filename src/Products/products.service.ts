@@ -13,7 +13,7 @@ export class ProductsService {
     const product = new this.userModel(date);
     return await product.save();
   }
-
+  // dsfjalsdkfj
   async findAll() {
     const product = await this.userModel.find().exec();
     return product;
