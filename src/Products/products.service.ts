@@ -18,6 +18,12 @@ export class ProductsService {
     const product = await this.userModel.find().exec();
     return product;
   }
+  async findOneCat(id: string) {
+    const product = await this.userModel.find({ category: id });
+    console.log(product);
+
+    return product;
+  }
   async findOne(id: string) {
     const product = await this.userModel.findOne({ _id: id });
     console.log(product);

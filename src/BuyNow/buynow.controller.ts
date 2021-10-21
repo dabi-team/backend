@@ -31,6 +31,10 @@ export class BuynowController {
       data.status,
     );
   }
+  @Get('getAll')
+  findAllPro() {
+    return this.appService.findAllProduct();
+  }
   @Get('getAll/:userId')
   findAll(@Param('userId') id: string) {
     return this.appService.findAll(id);

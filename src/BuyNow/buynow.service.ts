@@ -37,6 +37,12 @@ export class BuynowService {
 
     return product;
   }
+  async findAllProduct() {
+    const product = await this.cartModel.find().exec();
+    console.log(product);
+
+    return product;
+  }
   async delete(id: string) {
     return await this.cartModel.findByIdAndRemove(id);
   }

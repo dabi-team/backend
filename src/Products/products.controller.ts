@@ -22,6 +22,10 @@ export class ProductsController {
   findAll() {
     return this.appService.findAll();
   }
+  @Get('getAll/:id')
+  findAllByCat(@Param('id') id: string) {
+    return this.appService.findOneCat(id);
+  }
 
   @Get('getById/:id')
   findOne(@Param('id') id: string) {
