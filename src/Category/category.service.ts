@@ -11,6 +11,7 @@ export class CategoryService {
 
   async create(date: any) {
     const product = new this.userModel(date);
+    console.log(product);
     return await product.save();
   }
   async findAll() {
