@@ -37,7 +37,13 @@ export class AuthController {
     console.log(user);
 
     const cred = {
-      user: user,
+      user: {
+        _id: user.userId,
+        email: user.email,
+        password: user.password,
+        name: user.name,
+        number: user.number,
+      },
       jwt,
     };
     console.log(cred);
@@ -61,6 +67,7 @@ export class AuthController {
 
     return {
       user: {
+        _id: user._id,
         email: user.email,
         password: user.password,
         name: cred.name,
