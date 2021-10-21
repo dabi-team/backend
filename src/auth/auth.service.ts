@@ -26,9 +26,18 @@ export class AuthService {
 
     await user.save();
 
-    return auth;
+    return {
+      email: auth.email,
+      password: auth.password,
+      userId: auth._id,
+      name: user.name,
+      number: user.number,
+    };
   }
   async findOne(condition: any) {
     return this.authModel.findOne(condition);
+  }
+  async findOneUser(condition: any) {
+    return this.userModel.findOne(condition);
   }
 }

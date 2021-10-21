@@ -32,7 +32,7 @@ export class BuynowController {
     );
   }
   @Get('getAll/:userId')
-  findAll(@Param('id') id: string) {
+  findAll(@Param('userId') id: string) {
     return this.appService.findAll(id);
   }
   @Put('update/:id')

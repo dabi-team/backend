@@ -24,18 +24,25 @@ export class AuthController {
     if (users) {
       throw new BadRequestException('user exist');
     }
+    console.log(name);
+    console.log(number);
+
     const user = await this.appService.create({
       email,
       password: hashedPassword,
       name,
       number,
     });
-    const jwt = await this.jwtService.signAsync({ id: user._id });
+    const jwt = await this.jwtService.signAsync({ id: user.userId });
+    console.log(user);
 
-    return {
+    const cred = {
       user: user,
       jwt,
     };
+    console.log(cred);
+
+    return cred;
   }
   @Post('login')
   async login(
@@ -49,11 +56,16 @@ export class AuthController {
     if (!(await bcrypt.compare(password, user.password))) {
       throw new BadRequestException('Invalid credentials');
     }
+    const cred = await this.appService.findOneUser({ userId: user._id });
     const jwt = await this.jwtService.signAsync({ id: user._id });
-    // const hashedPassword = await bcrypt.hash(password, 12);
 
     return {
-      user: user,
+      user: {
+        email: user.email,
+        password: user.password,
+        name: cred.name,
+        number: cred.number,
+      },
       jwt,
     };
   }

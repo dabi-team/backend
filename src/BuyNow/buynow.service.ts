@@ -33,6 +33,8 @@ export class BuynowService {
         userId: userId,
       })
       .exec();
+    console.log(product);
+
     return product;
   }
   async delete(id: string) {
